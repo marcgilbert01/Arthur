@@ -5,9 +5,9 @@ package marc.arthur.EnvelopeBuilders;
  */
 public interface EnvelopeBuilder {
 
-    public Byte[] buildEnvelope(Byte[] content);
+    public byte[] buildEnvelope(int sequenceNumber , byte[] content);
 
-    public Byte[] extractContent(Byte[] envelope );
+    public byte[] extractContent(byte[] envelope );
 
 }
 

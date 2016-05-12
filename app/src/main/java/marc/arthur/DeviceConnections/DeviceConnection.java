@@ -6,11 +6,11 @@ package marc.arthur.DeviceConnections;
 public interface DeviceConnection {
 
     public void connect();
-    public void sendData(Byte[] data , DataReceiver dataReceiver);
+    public void sendData(byte[] data , DataReceiver dataReceiver);
 
     interface DataReceiver{
 
-        public void onDataReceived(Byte[] bytes);
+        public void onDataReceived(byte[] bytes);
     }
 
 

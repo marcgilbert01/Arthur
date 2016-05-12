@@ -7,31 +7,29 @@ import java.util.HashMap;
  */
 public class EnvelopeBuilderFactory {
 
-    static HashMap<String,EnvelopeBuilder> envelopeBuilders = new HashMap<>();
-    static {
+    public enum EnvelopBuilderType{
 
-        envelopeBuilders.put( "Arthur" , new ArthurEnvelopeBuilder() );
+        ARTHUR( new ArthurEnvelopeBuilder() );
+
+        EnvelopeBuilder envelopeBuilder;
+
+        EnvelopBuilderType(EnvelopeBuilder envelopeBuilder) {
+            this.envelopeBuilder = envelopeBuilder;
+        }
     }
 
 
-    public EnvelopeBuilder createEnvelopeBuilder(String envelopeName){
+
+    public EnvelopeBuilder createEnvelopeBuilder(EnvelopBuilderType envelopBuilderType){
 
         EnvelopeBuilder envelopeBuilder = null;
-
-        EnvelopeBuilder envelopeBuilderProto = envelopeBuilders.get(envelopeName);
-
-        if( envelopeBuilderProto!=null ){
-
-            try {
-                envelopeBuilder = envelopeBuilderProto.getClass().newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            envelopeBuilder = envelopBuilderType.envelopeBuilder.getClass().newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-
         return envelopeBuilder;
     }
 

@@ -10,14 +10,10 @@ public class IpConnection implements DeviceConnection {
 
     @Override
     public void connect() {
-
-        // TODO
     }
 
     @Override
-    public void sendData(DataReceiver dataReceiver) {
-
-        // TODO
+    public void sendData(byte[] data, DataReceiver dataReceiver) {
     }
 }
 
