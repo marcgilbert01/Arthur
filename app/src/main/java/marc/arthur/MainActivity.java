@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.Button;
 
 import marc.arthur.DeviceConnections.DeviceConnectionFactory;
-import marc.arthur.EnvelopeBuilders.EnvelopeBuilderFactory;
+import marc.arthur.PacketBuilders.ArthurCommandByteBuilder;
+import marc.arthur.PacketBuilders.ArthurEnvelopeBuilder;
+import marc.arthur.PacketBuilders.ArthurResponseByteBuilder;
+import marc.arthur.PacketBuilders.PacketBuilderFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,14 +23,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         // BUILD ROBOT CONTROLLER
-        EnvelopeBuilderFactory envelopeBuilderFactory = new EnvelopeBuilderFactory();
         DeviceConnectionFactory deviceConnectionFactory = new DeviceConnectionFactory();
+        PacketBuilderFactory packetBuilderFactory = new PacketBuilderFactory();
 
         ArthurController.Builder builder = new ArthurController.Builder();
-        builder.setEnvelopeBuilder(
-                envelopeBuilderFactory.createEnvelopeBuilder(EnvelopeBuilderFactory.EnvelopBuilderType.ARTHUR) );
         builder.setDeviceConnection(
                 deviceConnectionFactory.createDeviceConnection(DeviceConnectionFactory.DeviceConnectionType.DUMMY) );
+        builder.setArthurEnvelopeBuilder(
+                (ArthurEnvelopeBuilder) packetBuilderFactory.createPacketBuilder(PacketBuilderFactory.PacketBuilderType.ARTHUR_ENVELOPE));
+        builder.setArthurCommandByteBuilder(
+                (ArthurCommandByteBuilder) packetBuilderFactory.createPacketBuilder(PacketBuilderFactory.PacketBuilderType.ARTHUR_COMMAND_BYTE_BUILDER));
+        builder.setArthurResponseByteBuilder(
+                (ArthurResponseByteBuilder) packetBuilderFactory.createPacketBuilder(PacketBuilderFactory.PacketBuilderType.ARTHUR_RESPONSE_BYTE_BUILDER));
+
         final ArthurController arthurController = builder.build();
 
 

@@ -11,8 +11,7 @@ public interface CommandExecutor {
 
     public void executeCommand(Command command);
 
-    public void addResponseListener(ResponseListener responseListener);
-
+    public void setResponseListener(ResponseListener responseListener);
 
     interface ResponseListener{
         public void onResponseReceived(Response response);

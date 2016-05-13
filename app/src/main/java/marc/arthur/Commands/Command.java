@@ -10,6 +10,7 @@ public class Command{
 
     Response response;
     CommandExecutor commandExecutor;
+    int sequenceNumber;
 
     public void setCommandExecutor(CommandExecutor commandExecutor) {
         this.commandExecutor = commandExecutor;
@@ -29,9 +30,17 @@ public class Command{
 
     public void execute(CommandExecutor.ResponseListener responseListener){
 
+        commandExecutor.setResponseListener(responseListener);
         commandExecutor.executeCommand(this);
     }
 
 
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
 
+    public Command setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+        return this;
+    }
 }

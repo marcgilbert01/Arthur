@@ -8,8 +8,11 @@ import marc.arthur.CommandExecutors.Factories.CommandExecutorFactory;
 import marc.arthur.Commands.Command;
 import marc.arthur.Commands.CommandFactory;
 import marc.arthur.Commands.CommandMove;
+import marc.arthur.Commands.CommandRotate;
 import marc.arthur.DeviceConnections.DeviceConnection;
-import marc.arthur.EnvelopeBuilders.EnvelopeBuilder;
+import marc.arthur.PacketBuilders.ArthurCommandByteBuilder;
+import marc.arthur.PacketBuilders.ArthurEnvelopeBuilder;
+import marc.arthur.PacketBuilders.ArthurResponseByteBuilder;
 import marc.arthur.Responses.Response;
 
 /**
@@ -24,6 +27,7 @@ public class ArthurController {
     public void preformStraightLine(){
 
         CommandMove commandMove = (CommandMove) commands.get(CommandFactory.CommandType.MOVE);
+        commandMove.setSequenceNumber(1);
         commandMove.setDistance(15);
         commandMove.execute(new CommandExecutor.ResponseListener() {
             @Override
@@ -43,18 +47,50 @@ public class ArthurController {
 
 
 
+    public void performPentagon(){
+
+        CommandMove commandMove = (CommandMove) commands.get(CommandFactory.CommandType.MOVE);
+
+        CommandRotate commandRotate108degrees = (CommandRotate) commands.get(CommandFactory.CommandType.ROTATE);
+        commandRotate108degrees.setDegrees(108);
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
     static class Builder{
 
         DeviceConnection deviceConnection;
-        EnvelopeBuilder envelopeBuilder;
+        ArthurEnvelopeBuilder arthurEnvelopeBuilder;
+        ArthurCommandByteBuilder arthurCommandByteBuilder;
+        ArthurResponseByteBuilder arthurResponseByteBuilder;
 
         public Builder setDeviceConnection(DeviceConnection deviceConnection) {
             this.deviceConnection = deviceConnection;
             return this;
         }
 
-        public Builder setEnvelopeBuilder(EnvelopeBuilder envelopeBuilder) {
-            this.envelopeBuilder = envelopeBuilder;
+        public Builder setArthurEnvelopeBuilder(ArthurEnvelopeBuilder arthurEnvelopeBuilder) {
+            this.arthurEnvelopeBuilder = arthurEnvelopeBuilder;
+            return this;
+        }
+
+        public Builder setArthurCommandByteBuilder(ArthurCommandByteBuilder arthurCommandByteBuilder) {
+            this.arthurCommandByteBuilder = arthurCommandByteBuilder;
+            return this;
+        }
+
+        public Builder setArthurResponseByteBuilder(ArthurResponseByteBuilder arthurResponseByteBuilder) {
+            this.arthurResponseByteBuilder = arthurResponseByteBuilder;
             return this;
         }
 
@@ -71,10 +107,12 @@ public class ArthurController {
                 ArthurCommandExecutor arthurCommandExecutor =
                         (ArthurCommandExecutor) commandExecutorFactory.createCommandExecutor( commandType.getCommandExecutorType() );
                 arthurCommandExecutor.setDeviceConnection( deviceConnection );
-                arthurCommandExecutor.setEnvelopeBuilder( envelopeBuilder );
-                Command command = commandFactory.createCommand(commandType);
-                command.setCommandExecutor( commandExecutorFactory.createCommandExecutor(commandType.getCommandExecutorType()) );
+                arthurCommandExecutor.setEnvelopeBuilder( arthurEnvelopeBuilder );
+                arthurCommandExecutor.setCommandByteBuilder(arthurCommandByteBuilder);
+                arthurCommandExecutor.setResponseByteBuilder(arthurResponseByteBuilder);
 
+                Command command = commandFactory.createCommand(commandType);
+                command.setCommandExecutor( arthurCommandExecutor );
                 arthurController.commands.put( commandType , command );
 
             }

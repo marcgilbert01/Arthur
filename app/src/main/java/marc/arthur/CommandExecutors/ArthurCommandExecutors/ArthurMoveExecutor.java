@@ -5,10 +5,20 @@ import java.nio.ByteBuffer;
 import marc.arthur.CommandExecutors.ArthurCommandExecutors.ArthurCommandExecutor;
 import marc.arthur.Commands.Command;
 import marc.arthur.Commands.CommandMove;
+import marc.arthur.PacketBuilders.ArthurCommandByteBuilder;
+import marc.arthur.PacketBuilders.ArthurResponseByteBuilder;
 import marc.arthur.Responses.Response;
 
 /**
  * Created by gilbertm on 11/05/2016.
+ *
+ 1 Class Type 1
+ 2 Instruction Type 1
+ 3 Success (non-zero for successful) 1
+ 4 Payload Length (optional) 4
+ 8 Payload (optional)
+ *
+ *
  */
 public class ArthurMoveExecutor extends ArthurCommandExecutor {
 
@@ -19,12 +29,11 @@ public class ArthurMoveExecutor extends ArthurCommandExecutor {
 
         byte[] distanceInBytes = ByteBuffer.allocate(4).putInt( commandMove.getDistance() ).array();
 
-        CommandBytesBuilder commandBytesBuilder = new CommandBytesBuilder();
-        commandBytesBuilder.setClassType(getClassType())
+        commandByteBuilder.setClassType(getClassType())
                 .setInstructionType(getInstructionType())
                 .setPayLoad(distanceInBytes);
 
-        return commandBytesBuilder.build();
+        return commandByteBuilder.buildPacket();
 
     }
 
@@ -35,23 +44,18 @@ public class ArthurMoveExecutor extends ArthurCommandExecutor {
 
         Response response = new Response();
 
-        ResponseBytesParser responseBytesParser = new ResponseBytesParser();
-        responseBytesParser.parse(bytes);
+        responseByteBuilder.extractPayload(bytes);
 
-        if( responseBytesParser.getClassType()==getClassType() &&
-            responseBytesParser.getInstructionType()==getInstructionType() &&
-            responseBytesParser.getSuccess()>0
+        if( responseByteBuilder.getClassType()==getClassType() &&
+            responseByteBuilder.getInstructionType()==getInstructionType() &&
+            responseByteBuilder.getSuccess()>0
             ){
 
             response.setSuccess(true);
         }
 
 /*
-        1 Class Type 1
-        2 Instruction Type 1
-        3 Success (non-zero for successful) 1
-        4 Payload Length (optional) 4
-        8 Payload (optional)
+
 */
         return response;
     }

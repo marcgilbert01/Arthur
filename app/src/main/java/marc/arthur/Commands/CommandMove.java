@@ -9,15 +9,6 @@ public class CommandMove extends Command{
 
     Integer distance;
 
-    @Override
-    public void setCommandExecutor(CommandExecutor commandExecutor) {
-    }
-
-    @Override
-    public CommandExecutor getCommandExecutor() {
-        return null;
-    }
-
     public Integer getDistance() {
         return distance;
     }
