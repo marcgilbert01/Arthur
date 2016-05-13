@@ -4,6 +4,20 @@ import java.nio.ByteBuffer;
 
 /**
  * Created by gilbertm on 13/05/2016.
+ *
+
+ Byte Index Command           Length
+ 1    Class Type              1
+ 2    Instruction Type        1
+ 3    Length of payload(int)  4
+ 7    Payload varies
+
+ *
+ *
+ *
+ *
+ *
+ *
  */
 public class ArthurCommandByteBuilder implements PacketBuilder{
 
@@ -30,7 +44,16 @@ public class ArthurCommandByteBuilder implements PacketBuilder{
     @Override
     public byte[] extractPayload(byte[] packet) {
 
-        return new byte[0];
+        classType = packet[0];
+        instructionType = packet[1];
+        //PAYLOAD LENGTH
+        byte[] payLoadLength = new byte[4];
+        System.arraycopy( packet , 2 , payLoadLength , 0 , 4 );
+        int payloadLength = ByteBuffer.wrap(payLoadLength).getInt();
+        // PAYLOAD
+        System.arraycopy(packet,6,payLoad,0,payloadLength);
+
+        return payLoad;
 
     }
 
