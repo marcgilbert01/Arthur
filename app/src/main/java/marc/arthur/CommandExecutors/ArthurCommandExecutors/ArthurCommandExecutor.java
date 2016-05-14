@@ -42,6 +42,7 @@ public abstract class ArthurCommandExecutor implements CommandExecutor {
 
         deviceConnection.connect();
         deviceConnection.sendData(envelope, new DeviceConnection.DataReceiver() {
+
             @Override
             public void onDataReceived(byte[] bytes) {
 
@@ -52,6 +53,7 @@ public abstract class ArthurCommandExecutor implements CommandExecutor {
                     responseListener.onResponseReceived(response);
                 }
             }
+
         });
     }
 
