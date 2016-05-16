@@ -55,14 +55,10 @@ public class ArthurController {
             }
         });
 
-
-
-
     }
 
 
     public void getInPlaceForPentagone(final CallBack callBack){
-
 
         final CommandMove commandMove = (CommandMove) commands.get(CommandFactory.CommandType.MOVE);
         final CommandRotate commandRotate = (CommandRotate) commands.get(CommandFactory.CommandType.ROTATE);
@@ -108,14 +104,12 @@ public class ArthurController {
                 }
             }
         };
-
         performPentagonSide(callBack);
 
     }
 
 
     public void performPentagonSide(final CallBack callBack){
-
 
         final CommandMove commandMove = (CommandMove) commands.get(CommandFactory.CommandType.MOVE);
         final CommandRotate commandRotate = (CommandRotate) commands.get(CommandFactory.CommandType.ROTATE);
@@ -149,7 +143,6 @@ public class ArthurController {
                 });
             }
         });
-
     }
 
 
@@ -165,7 +158,7 @@ public class ArthurController {
             @Override
             public void onResponseReceived(Response response) {
 
-                if( response.getSuccess() ){
+                if( response!=null && response.getSuccess() ){
                     System.out.println("Done speaking ");
                 }
                 else{
@@ -176,8 +169,6 @@ public class ArthurController {
 
             }
         });
-
-
 
     }
 

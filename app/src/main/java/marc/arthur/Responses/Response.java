@@ -3,7 +3,7 @@ package marc.arthur.Responses;
 
 public class Response {
 
-    Boolean success;
+    Boolean success = false;
     String error;
 
     public Boolean getSuccess() {
