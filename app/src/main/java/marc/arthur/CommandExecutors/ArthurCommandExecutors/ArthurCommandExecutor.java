@@ -52,6 +52,8 @@ public abstract class ArthurCommandExecutor implements CommandExecutor {
 
                     responseListener.onResponseReceived(response);
                 }
+
+                deviceConnection.disconnect();
             }
 
         });

@@ -28,15 +28,25 @@ public class ArthurCommandByteBuilder implements PacketBuilder{
     @Override
     public byte[] buildPacket() {
 
-        byte[] bytes = new byte[ 6 + payLoad.length ];
+        byte[] bytes;
+        
+        int payLoadLength = 0;
+        if( payLoad!=null ){
+            payLoadLength = payLoad.length;
+        }
 
+        bytes = new byte[6 + payLoadLength];
         bytes[0] = classType;
         bytes[1] = instructionType;
+
         // PAYLOAD LENGTH
-        byte[] payLoadLength = ByteBuffer.allocate(4).putInt( payLoad.length ).array();
-        System.arraycopy( payLoadLength , 0 , bytes , 2 , 4 );
-        // PAYLOAD
-        System.arraycopy( payLoad , 0 , bytes , 6 , payLoad.length );
+        byte[] payLoadLengthBytes = ByteBuffer.allocate(4).putInt( payLoadLength ).array();
+        System.arraycopy(payLoadLengthBytes, 0, bytes, 2, 4);
+
+        if( payLoad!=null ) {
+            // PAYLOAD
+            System.arraycopy(payLoad, 0, bytes, 6, payLoadLength);
+        }
 
         return bytes;
     }

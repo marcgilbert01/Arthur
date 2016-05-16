@@ -41,6 +41,30 @@ public class IpConnection implements DeviceConnection {
             dataReceiver.onDataReceived( buffer );
 
         } catch (IOException e) {
+
+            e.printStackTrace();
+            try {
+                inputStream.close();
+                outputStream.close();
+                socket.close();
+            } catch (IOException ec) {
+                ec.printStackTrace();
+            }
+
+        }
+
+
+
+    }
+
+    @Override
+    public void disconnect() {
+
+        try {
+            outputStream.close();
+            inputStream.close();
+            socket.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

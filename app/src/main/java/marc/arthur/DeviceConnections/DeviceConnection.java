@@ -14,4 +14,8 @@ public interface DeviceConnection {
     }
 
 
+    public void disconnect();
+
+
+
 }

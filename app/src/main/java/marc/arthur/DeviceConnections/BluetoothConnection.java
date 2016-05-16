@@ -14,7 +14,10 @@ public class BluetoothConnection implements DeviceConnection {
     public void sendData(byte[] data, DataReceiver dataReceiver) {
     }
 
+    @Override
+    public void disconnect() {
 
+    }
 
 
 }

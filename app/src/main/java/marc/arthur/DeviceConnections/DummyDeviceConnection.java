@@ -40,6 +40,11 @@ public class DummyDeviceConnection implements DeviceConnection{
 
     }
 
+    @Override
+    public void disconnect() {
+
+    }
+
 
     //////LOG PACKET OF DATA
     ////////////////////////////////////////////////////////////////////////

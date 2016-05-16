@@ -54,9 +54,6 @@ public class ArthurMoveExecutor extends ArthurCommandExecutor {
             response.setSuccess(true);
         }
 
-/*
-
-*/
         return response;
     }
 

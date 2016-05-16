@@ -10,7 +10,9 @@ public class CommandFactory {
     public enum CommandType {
 
         MOVE( new CommandMove() , CommandExecutorFactory.CommandExecutorType.MOVE ),
-        ROTATE( new CommandRotate() , CommandExecutorFactory.CommandExecutorType.ROTATE );
+        ROTATE( new CommandRotate() , CommandExecutorFactory.CommandExecutorType.ROTATE ),
+        PHOTO( new CommandPhoto() , CommandExecutorFactory.CommandExecutorType.PHOTO ),
+        SPEAK( new CommandSpeak() , CommandExecutorFactory.CommandExecutorType.SPEAK );
 
 
         Command command;

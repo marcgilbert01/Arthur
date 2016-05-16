@@ -28,6 +28,8 @@ public abstract class CommandExecutorFactory {
 
         MOVE,
         ROTATE,
+        PHOTO,
+        SPEAK
         ;
 
     }
